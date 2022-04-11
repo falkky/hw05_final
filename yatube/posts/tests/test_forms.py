@@ -55,12 +55,12 @@ class FormTest(TestCase):
         """Проверка создания поста при отправке валидной формы"""
         post_count = Post.objects.count()
         small_gif = (
-             b'\x47\x49\x46\x38\x39\x61\x02\x00'
-             b'\x01\x00\x80\x00\x00\x00\x00\x00'
-             b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
-             b'\x00\x00\x00\x2C\x00\x00\x00\x00'
-             b'\x02\x00\x01\x00\x00\x02\x02\x0C'
-             b'\x0A\x00\x3B'
+            b'\x47\x49\x46\x38\x39\x61\x02\x00'
+            b'\x01\x00\x80\x00\x00\x00\x00\x00'
+            b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
+            b'\x00\x00\x00\x2C\x00\x00\x00\x00'
+            b'\x02\x00\x01\x00\x00\x02\x02\x0C'
+            b'\x0A\x00\x3B'
         )
         uploaded = SimpleUploadedFile(
             name='small.gif',
@@ -178,17 +178,17 @@ class CacheTest(TestCase):
         response_2 = self.authorized_client.get(reverse('posts:index'))
         # Сравниваем вновь запрошенную страницу с сохраненным контетом
         self.assertEqual(
-                         response_1.content,
-                         response_2.content,
-                         'Кеширование не работает'
-                         )
+            response_1.content,
+            response_2.content,
+            'Кеширование не работает'
+        )
         # Очищаем кеш
         cache.clear()
         # Снова запрашиваем главную страницу
         response_3 = self.authorized_client.get(reverse('posts:index'))
         # Сравниваем вновь запрошенную страницу с сохраненным контетом
         self.assertNotEqual(
-                            response_1.content,
-                            response_3.content,
-                            'Кеш не очистился'
-                            )
+            response_1.content,
+            response_3.content,
+            'Кеш не очистился'
+        )
