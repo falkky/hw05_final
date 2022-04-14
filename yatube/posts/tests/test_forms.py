@@ -93,6 +93,32 @@ class FormTest(TestCase):
             'Не создалась запись с изображением!'
         )
 
+    def test_create_post_with_empty_image(self):
+        """Проверка создания поста если передадим не изображение"""
+        # Создаем пустую картинку
+        small_gif = (b'')
+        empty_image = SimpleUploadedFile(
+                name='img_file.gif',
+                content=small_gif,
+                content_type='image/gif'
+            )
+        form_data = {
+            'text': 'Тестовый текст',
+            'group': FormTest.group.pk,
+            'image': empty_image,
+        }
+        response = self.authorized_client.post(
+            reverse('posts:post_create'),
+            data=form_data,
+            follow=True
+        )
+        self.assertFormError(
+            response,
+            'form',
+            'image',
+            'Отправленный файл пуст.'
+        )
+
     def test_edit_post(self):
         """Проверка редактирования поста при отправке валидной формы"""
         form_data = {

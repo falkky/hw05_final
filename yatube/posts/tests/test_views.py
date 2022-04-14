@@ -247,7 +247,7 @@ class PostPagesTests(TestCase):
 
     def test_follow(self):
         """Авторизованный пользователь может подписываться
-        на других пользователей и удалять их из подписок
+        на других пользователей
         """
         follow_count = Follow.objects.count()
         # Запрос на подписку
@@ -259,6 +259,20 @@ class PostPagesTests(TestCase):
         )
         # Проверяем, что кол-во подписок увеличилось
         self.assertEqual(Follow.objects.count(), follow_count + 1)
+
+    def test_unfollow(self):
+        """Авторизованный пользователь может отписываться
+        от других пользователей
+        """
+        # Запрос на подписку
+        self.authorized_client.get(
+            reverse(
+                'posts:profile_follow',
+                args=[f'{PostPagesTests.user}']
+            )
+        )
+        # Проверяем, что кол-во подписок увеличилось
+        follow_count = Follow.objects.count()
         # Запрос на отписку
         self.authorized_client.get(
             reverse(
@@ -267,7 +281,7 @@ class PostPagesTests(TestCase):
             )
         )
         # Проверяем, что кол-во подписок уменьшилось
-        self.assertEqual(Follow.objects.count(), follow_count)
+        self.assertEqual(Follow.objects.count(), follow_count - 1)
 
     def test_follow_index_page(self):
         """Новая запись пользователя появляется в ленте тех,

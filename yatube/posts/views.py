@@ -42,7 +42,7 @@ def profile(request, username):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     # Проверяем, что пользователь авторизован
-    if user in User.objects.all():
+    if user.is_authenticated:
         # Получаем список подписанных на автора пользователей
         followers = author.following.values_list('user', flat=True)
         # Проверяем вхождение текущего пользователя в список followers
@@ -100,16 +100,21 @@ def post_edit(request, post_id):
     if request.user != post.author:
         raise PermissionDenied
     if request.method != 'POST':
-        return render(request, 'posts/create_post.html', {'form': form,
-                                                          'post': post,
-                                                          'is_edit': True}
-                      )
+        return render(
+                      request,
+                      'posts/create_post.html',
+                      {
+                       'form': form,
+                       'post': post,
+                       'is_edit': True
+                        }
+                       )
     if not form.is_valid():
         return render(request,
                       'posts/create_post.html',
                       {'form': form}
                       )
-    post = form.save(commit=False)
+    post = form.save()
     post.save()
     return redirect('posts:post_detail', post.id)
 
