@@ -107,7 +107,7 @@ def post_edit(request, post_id):
              'form': form,
              'post': post,
              'is_edit': True,
-            }
+             }
         )
     if not form.is_valid():
         return render(request,
