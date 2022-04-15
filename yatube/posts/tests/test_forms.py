@@ -98,10 +98,10 @@ class FormTest(TestCase):
         # Создаем пустую картинку
         small_gif = (b'')
         empty_image = SimpleUploadedFile(
-                name='img_file.gif',
-                content=small_gif,
-                content_type='image/gif'
-            )
+            name='img_file.gif',
+            content=small_gif,
+            content_type='image/gif'
+        )
         form_data = {
             'text': 'Тестовый текст',
             'group': FormTest.group.pk,

@@ -101,14 +101,14 @@ def post_edit(request, post_id):
         raise PermissionDenied
     if request.method != 'POST':
         return render(
-                      request,
-                      'posts/create_post.html',
-                      {
-                       'form': form,
-                       'post': post,
-                       'is_edit': True
-                        }
-                       )
+            request,
+            'posts/create_post.html',
+            {
+            'form': form,
+            'post': post,
+            'is_edit': True,
+            }
+        )
     if not form.is_valid():
         return render(request,
                       'posts/create_post.html',
