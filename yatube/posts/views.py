@@ -104,9 +104,9 @@ def post_edit(request, post_id):
             request,
             'posts/create_post.html',
             {
-            'form': form,
-            'post': post,
-            'is_edit': True,
+             'form': form,
+             'post': post,
+             'is_edit': True,
             }
         )
     if not form.is_valid():
